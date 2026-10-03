@@ -18,7 +18,7 @@ export const Contact = () => {
     data.start_time = startTime.toString();
     
     try {
-      const response = await fetch('/api/contact.php', {
+      const response = await fetch(`${import.meta.env.BASE_URL}api/contact.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

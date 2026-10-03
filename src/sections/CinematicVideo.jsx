@@ -89,7 +89,7 @@ export const CinematicVideo = () => {
           className="video-cinematic-wrapper"
         >
           <video 
-            src="/media/hero-experience.mp4.mp4"
+            src={`${import.meta.env.BASE_URL}media/hero-experience.mp4.mp4`}
             autoPlay 
             muted 
             loop 
