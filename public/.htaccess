@@ -1,0 +1,60 @@
+# ==============================================================================
+# PRITISH GANGULY PORTFOLIO - PRODUCTION SECURITY HEADERS
+# ==============================================================================
+
+<IfModule mod_headers.c>
+    # 1. Content-Security-Policy (CSP)
+    # Restricts the resources that the browser is allowed to load.
+    # Note: 'unsafe-inline' is used for styles to support React/GSAP dynamic styles.
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;"
+
+    # 2. Strict-Transport-Security (HSTS)
+    # Forces browsers to only connect via HTTPS. (1 year = 31536000 seconds)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+
+    # 3. X-Content-Type-Options
+    # Prevents browsers from MIME-sniffing a response away from the declared content-type.
+    Header always set X-Content-Type-Options "nosniff"
+
+    # 4. Referrer-Policy
+    # Controls how much referrer information is included with requests.
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # 5. X-Frame-Options
+    # Provides older browser protection against Clickjacking (CSP frame-ancestors covers modern browsers).
+    Header always set X-Frame-Options "DENY"
+
+    # 6. Permissions-Policy
+    # Restricts access to device features and APIs.
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+</IfModule>
+
+# ==============================================================================
+# DIRECTORY LISTING AND SENSITIVE FILE PROTECTION
+# ==============================================================================
+
+# Disable directory browsing
+Options -Indexes
+
+# Protect sensitive files and directories
+<FilesMatch "^\.env|^\.git|package\.json|package-lock\.json|vite\.config\.js|composer\.json|\.log$|\.sql$|\.bak$|\.backup$">
+    Require all denied
+</FilesMatch>
+
+# Protect .git directory specifically if it somehow gets uploaded
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^\.git - [F,L]
+</IfModule>
+
+# ==============================================================================
+# ROUTING FOR SINGLE PAGE APPLICATION (REACT/VITE)
+# ==============================================================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteRule ^index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.html [L]
+</IfModule>
