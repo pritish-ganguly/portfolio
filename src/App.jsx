@@ -30,9 +30,8 @@ import { NotFound } from './components/NotFound';
 function App() {
   const [siteLoaded, setSiteLoaded] = useState(false);
 
-  function App() {
-  const [siteLoaded, setSiteLoaded] = useState(false);
-
+  // GitHub Pages serves the site from /portfolio/,
+  // while local development serves it from /.
   const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
   const currentPath = window.location.pathname;
 
@@ -41,6 +40,7 @@ function App() {
       ? currentPath.slice(basePath.length) || '/'
       : currentPath;
 
+  // Show the custom 404 only for genuinely invalid routes.
   if (path !== '/' && path !== '/index.html') {
     return (
       <ThemeProvider>
@@ -54,6 +54,7 @@ function App() {
       <Cursor />
       <Preloader onComplete={() => setSiteLoaded(true)} />
       <Navbar show={siteLoaded} />
+
       <main>
         <Hero isLoaded={siteLoaded} />
         <CinematicVideo />
@@ -76,6 +77,7 @@ function App() {
         <Process />
         <Contact />
       </main>
+
       <Footer />
       <ScrollToTop />
     </ThemeProvider>
