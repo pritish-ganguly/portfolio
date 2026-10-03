@@ -30,8 +30,17 @@ import { NotFound } from './components/NotFound';
 function App() {
   const [siteLoaded, setSiteLoaded] = useState(false);
 
-  // Check route for 404
-  const path = window.location.pathname;
+  function App() {
+  const [siteLoaded, setSiteLoaded] = useState(false);
+
+  const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const currentPath = window.location.pathname;
+
+  const path =
+    basePath && currentPath.startsWith(basePath)
+      ? currentPath.slice(basePath.length) || '/'
+      : currentPath;
+
   if (path !== '/' && path !== '/index.html') {
     return (
       <ThemeProvider>
