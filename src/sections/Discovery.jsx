@@ -45,7 +45,7 @@ export const Discovery = () => {
       <div className="container">
         
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <span className="eyebrow">15 / DISCOVERY</span>
+          <span className="eyebrow">14 / DISCOVERY</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem' }}>
             BUILD IT.<br/>THEN HELP PEOPLE FIND IT.
           </h2>

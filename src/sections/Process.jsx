@@ -157,7 +157,7 @@ export const Process = () => {
       <div className="container" style={{ position: 'relative' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
-          <span className="eyebrow">20 / PROCESS</span>
+          <span className="eyebrow">18 / PROCESS</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem' }}>
             A SIMPLE PROCESS.<br/>A SERIOUS RESULT.
           </h2>

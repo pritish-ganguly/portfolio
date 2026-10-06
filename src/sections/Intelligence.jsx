@@ -37,7 +37,7 @@ export const Intelligence = () => {
       <div className="container">
         
         <div style={{ marginBottom: '4rem' }}>
-          <span className="eyebrow">11 / INTELLIGENCE</span>
+          <span className="eyebrow">10 / INTELLIGENCE</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem' }}>
             USE AI WHERE IT ACTUALLY HELPS.
           </h2>

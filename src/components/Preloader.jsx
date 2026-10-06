@@ -3,7 +3,9 @@ import gsap from 'gsap';
 
 export const Preloader = ({ onComplete }) => {
   const containerRef = useRef(null);
-  const percentRef = useRef(null);
+  const sandTopRef = useRef(null);
+  const sandBottomRef = useRef(null);
+  const hourglassGroupRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -17,11 +19,11 @@ export const Preloader = ({ onComplete }) => {
     }
 
     document.body.style.overflow = 'hidden';
-    const progressObj = { value: 0 };
     
     const ctx = gsap.context(() => {
+      // Fade in preloader container instantly
       gsap.to(containerRef.current, { opacity: 1, duration: 0.1 });
-      
+
       const tl = gsap.timeline({
         onComplete: () => {
           sessionStorage.setItem('hasSeenPreloader', 'true');
@@ -31,47 +33,36 @@ export const Preloader = ({ onComplete }) => {
         }
       });
 
-      // Initial progress to 40% to show activity
-      tl.to(progressObj, {
-        value: 40,
-        duration: 0.5,
-        ease: 'power1.out',
-        onUpdate: updatePercent
-      });
+      // Hourglass animation sequence
+      // 1. Drain the top sand
+      tl.to(sandTopRef.current, {
+        scaleY: 0,
+        transformOrigin: "bottom center",
+        duration: 1.5,
+        ease: "power1.inOut"
+      }, 0);
 
-      // Simulate waiting for critical assets (e.g., fonts, first paint)
-      // We push it to 80% over 1 second
-      tl.to(progressObj, {
-        value: 80,
-        duration: 1.0,
-        ease: 'power1.inOut',
-        onUpdate: updatePercent
-      });
+      // 2. Fill the bottom sand simultaneously
+      tl.to(sandBottomRef.current, {
+        scaleY: 1,
+        transformOrigin: "bottom center",
+        duration: 1.5,
+        ease: "power1.inOut"
+      }, 0);
 
-      // Once loaded (or after a small delay), push to 100%
-      tl.to(progressObj, {
-        value: 100,
-        duration: 0.5,
-        ease: 'power2.out',
-        onUpdate: updatePercent
-      });
+      // 3. Optional flip or hold for elegance
+      tl.to({}, { duration: 0.2 });
 
-      tl.to({}, { duration: 0.3 }); // hold
-      
+      // 4. Exit animation
       tl.to(containerRef.current, {
-        y: '-100%',
-        duration: 0.8,
-        ease: 'power3.inOut'
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.inOut'
       });
       
-      function updatePercent() {
-        if (percentRef.current) {
-          const val = Math.round(progressObj.value).toString().padStart(2, '0');
-          percentRef.current.innerText = val + '%';
-        }
-      }
     }, containerRef);
 
+    // Hard failsafe
     const failsafe = setTimeout(() => {
       document.body.style.overflow = '';
       setIsVisible(false);
@@ -99,25 +90,55 @@ export const Preloader = ({ onComplete }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '2rem',
-        willChange: 'transform',
+        willChange: 'opacity',
         opacity: 0
       }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', textAlign: 'center' }}>
-        <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontWeight: 800, letterSpacing: '0.1em', color: 'var(--text-primary)' }}>
-          PRITISH GANGULY
-        </h1>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
         
-        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span ref={percentRef} style={{ fontSize: 'clamp(3rem, 10vw, 6rem)', fontWeight: 300, color: 'var(--accent)', fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em', lineHeight: 1 }}>
-            00%
-          </span>
-        </div>
-        
-        <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', fontWeight: 600, letterSpacing: '0.15em', color: 'var(--text-secondary)' }}>
-          WEB. INTELLIGENCE. INFRASTRUCTURE.
-        </p>
+        {/* SVG Hourglass */}
+        <svg 
+          ref={hourglassGroupRef}
+          width="48" 
+          height="64" 
+          viewBox="0 0 48 64" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ overflow: 'visible' }}
+        >
+          {/* Glass outline */}
+          <path 
+            d="M 12 4 L 36 4 L 36 8 C 36 16 28 24 24 32 C 20 24 12 16 12 8 L 12 4 Z" 
+            stroke="var(--text-primary)" 
+            strokeWidth="2" 
+            strokeLinejoin="round"
+          />
+          <path 
+            d="M 12 60 L 36 60 L 36 56 C 36 48 28 40 24 32 C 20 40 12 48 12 56 L 12 60 Z" 
+            stroke="var(--text-primary)" 
+            strokeWidth="2" 
+            strokeLinejoin="round"
+          />
+          {/* Caps */}
+          <line x1="8" y1="4" x2="40" y2="4" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="8" y1="60" x2="40" y2="60" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round" />
+          
+          {/* Top Sand (Starts Full) */}
+          <path 
+            ref={sandTopRef}
+            d="M 14 6 L 34 6 L 34 8 C 34 15 27 23 24 30 C 21 23 14 15 14 8 L 14 6 Z" 
+            fill="var(--text-primary)" 
+          />
+          
+          {/* Bottom Sand (Starts Empty) */}
+          <path 
+            ref={sandBottomRef}
+            d="M 14 58 L 34 58 L 34 56 C 34 49 27 41 24 34 C 21 41 14 49 14 56 L 14 58 Z" 
+            fill="var(--text-primary)" 
+            style={{ transform: 'scaleY(0)', transformOrigin: 'bottom center' }}
+          />
+        </svg>
+
       </div>
     </div>
   );

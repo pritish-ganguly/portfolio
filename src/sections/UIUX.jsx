@@ -38,7 +38,7 @@ export const UIUX = () => {
         <div className="ui-grid">
           
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span className="eyebrow">09 / UI / UX</span>
+            <span className="eyebrow">08 / UI / UX</span>
             <h2 className="heading-1" style={{ marginBottom: '2rem' }}>
               MAKE THE COMPLEX FEEL OBVIOUS.
             </h2>

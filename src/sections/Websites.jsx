@@ -49,7 +49,7 @@ export const Websites = () => {
       <div className="container">
         
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <span className="eyebrow web-reveal">04 / WEB</span>
+          <span className="eyebrow web-reveal">05 / WEB</span>
           <h2 className="heading-1 web-reveal" style={{ marginBottom: '1.5rem', maxWidth: '20ch', marginInline: 'auto' }}>
             WEBSITES DESIGNED TO BE USED, NOT JUST LOOKED AT.
           </h2>

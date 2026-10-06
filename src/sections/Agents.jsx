@@ -21,7 +21,7 @@ export const Agents = () => {
       <div className="container">
         
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <span className="eyebrow">12 / AGENTS</span>
+          <span className="eyebrow">11 / AGENTS</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem' }}>
             AI THAT CAN ACT,<br/>NOT JUST ANSWER.
           </h2>

@@ -5,14 +5,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const techGroups = [
-  { name: 'WEB', items: ['React', 'Next.js', 'Vite', 'HTML/CSS', 'JavaScript'] },
-  { name: 'AI / ML', items: ['Python', 'Scikit-learn', 'NLP', 'LLMs', 'RAG'] },
-  { name: 'AUTOMATION', items: ['Agents', 'Workflows', 'APIs'] },
-  { name: 'NETWORKING', items: ['TCP/IP', 'BGP', 'OSPF', 'VLAN', 'DNS'] },
-  { name: 'SECURITY', items: ['Threat Detection', 'Hardening', 'Audits'] },
-  { name: 'CLOUD', items: ['Linux', 'Windows', 'Hosting', 'Deployment'] },
-  { name: 'UI / UX', items: ['Figma', 'Wireframing', 'Prototyping'] },
-  { name: 'SEO', items: ['Technical SEO', 'Analytics', 'Optimization'] }
+  { name: 'NETWORKING & INFRA', items: ['TCP/IP & LAN/WAN', 'Routing & Switching', 'VLAN, DHCP, DNS', 'VPN & Firewalls', 'OSPF & BGP'] },
+  { name: 'AI & ML', items: ['Python', 'Scikit-learn', 'NLP & TF-IDF', 'Linear SVM & RF', 'GenAI & LLMs (Learning)'] },
+  { name: 'SECURITY & MONITORING', items: ['Threat Detection', 'Network Monitoring', 'Risk Scoring', 'Scapy'] },
+  { name: 'WEB DEVELOPMENT', items: ['React & Vite', 'JavaScript', 'HTML/CSS', 'PHP', 'WordPress'] },
+  { name: 'CLOUD & SYSTEMS', items: ['Linux', 'Windows', 'Basic Cloud Computing', 'Git & GitHub'] },
+  { name: 'DIGITAL EXPERIENCES', items: ['UI / UX Design', 'Responsive Design', 'SEO', 'Automation'] }
 ];
 
 export const TechnologyUniverse = () => {
@@ -27,14 +25,14 @@ export const TechnologyUniverse = () => {
         if (!prefersReducedMotion) {
           gsap.to('.tech-orbit', {
             rotation: 360,
-            duration: 60,
+            duration: 80,
             repeat: -1,
             ease: "none"
           });
           
           gsap.to('.tech-item', {
             rotation: -360,
-            duration: 60,
+            duration: 80,
             repeat: -1,
             ease: "none"
           });
@@ -51,10 +49,13 @@ export const TechnologyUniverse = () => {
       <div className="container">
         
         <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
-          <span className="eyebrow">16 / THE STACK</span>
-          <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '15ch', marginInline: 'auto' }}>
-            THE TOOLS I USE TO MAKE THINGS WORK.
+          <span className="eyebrow">15 / THE STACK</span>
+          <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '20ch', marginInline: 'auto' }}>
+            VERIFIED EXPERTISE & DIGITAL FOUNDATIONS.
           </h2>
+          <p className="body-text" style={{ marginInline: 'auto' }}>
+            A transparent view of my hands-on technical capabilities across systems, software, and intelligence.
+          </p>
         </div>
         
         {/* Desktop Orbit / Mobile Grid */}
@@ -106,12 +107,12 @@ export const TechnologyUniverse = () => {
                     padding: '1.5rem',
                     borderRadius: '16px',
                     border: '1px solid var(--border-color)',
-                    minWidth: '180px',
+                    minWidth: '200px',
                     textAlign: 'center',
                     boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
                   }}>
-                    <span className="metadata" style={{ color: 'var(--accent)', marginBottom: '0.5rem', display: 'block' }}>{group.name}</span>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                    <span className="metadata" style={{ color: 'var(--accent)', marginBottom: '0.75rem', display: 'block' }}>{group.name}</span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
                       {group.items.slice(0, 3).map(item => (
                         <span key={item} style={{ fontSize: '0.875rem', fontWeight: 500 }}>{item}</span>
                       ))}
@@ -123,13 +124,13 @@ export const TechnologyUniverse = () => {
           </div>
           
           {/* Mobile Grid View */}
-          <div className="mobile-tech-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>
+          <div className="mobile-tech-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
             {techGroups.map((group) => (
-              <div key={group.name} style={{ backgroundColor: 'var(--surface-main)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-                <span className="metadata" style={{ color: 'var(--accent)', marginBottom: '1rem', display: 'block' }}>{group.name}</span>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <div key={group.name} style={{ backgroundColor: 'var(--surface-main)', padding: '2rem', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+                <span className="metadata" style={{ color: 'var(--accent)', marginBottom: '1.25rem', display: 'block' }}>{group.name}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {group.items.map(item => (
-                    <span key={item} style={{ fontSize: '0.875rem', fontWeight: 500 }}>{item}</span>
+                    <span key={item} style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--text-primary)' }}>{item}</span>
                   ))}
                 </div>
               </div>

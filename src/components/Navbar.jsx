@@ -38,10 +38,8 @@ export const Navbar = ({ show }) => {
   const navLinks = [
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
-    { name: 'Skills', href: '#skills' },
     { name: 'Work', href: '#work' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Projects', href: '#projects' }
   ];
 
   const handleNavClick = (e, href) => {
@@ -57,12 +55,12 @@ export const Navbar = ({ show }) => {
     <>
       <nav ref={navRef} style={{
         position: 'fixed',
-        top: '1.5rem', 
+        top: '1rem', 
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 50,
         width: 'calc(100% - 2rem)',
-        maxWidth: '1200px',
+        maxWidth: '900px', // More compact width
         pointerEvents: 'none',
         opacity: 0
       }}>
@@ -72,48 +70,48 @@ export const Navbar = ({ show }) => {
           alignItems: 'center',
           pointerEvents: 'auto',
           background: 'var(--nav-bg-scrolled)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
           border: '1px solid var(--border-color)',
           borderRadius: '99px',
-          padding: '0.75rem 1.5rem',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.05)'
+          padding: '0.375rem 0.5rem 0.375rem 1.25rem', // Tighter padding, slightly more on left for brand
+          boxShadow: '0 8px 32px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.05)'
         }}>
           {/* Logo / Brand */}
-          <a href="#" className="nav-brand" style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+          <a href="#" className="nav-brand" style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
             <span style={{ fontSize: '0.875rem', fontWeight: 800, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>PRITISH</span>
-            <span style={{ fontSize: '0.875rem', fontWeight: 800, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>GANGULY</span>
+            <span className="brand-last-name" style={{ fontSize: '0.875rem', fontWeight: 500, letterSpacing: '-0.02em', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>GANGULY</span>
           </a>
           
           {/* Desktop Nav */}
-          <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }} className="desktop-nav">
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }} className="desktop-nav">
             <ul style={{ display: 'flex', gap: '1.5rem' }}>
               {navLinks.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} onClick={(e) => handleNavClick(e, link.href)} style={{ fontSize: '0.875rem', fontWeight: 500, transition: 'color 0.2s' }} className="nav-link-hover">
+                  <a href={link.href} onClick={(e) => handleNavClick(e, link.href)} style={{ fontSize: '0.8125rem', fontWeight: 500, transition: 'color 0.2s' }} className="nav-link-hover">
                     {link.name}
                   </a>
                 </li>
               ))}
             </ul>
             
-            <div style={{ width: '1px', height: '16px', backgroundColor: 'var(--border-color)' }}></div>
+            <div style={{ width: '1px', height: '14px', backgroundColor: 'var(--border-color)' }}></div>
             
-            <button onClick={toggleTheme} aria-label="Toggle theme" style={{ padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }} className="nav-link-hover">
-              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            <button onClick={toggleTheme} aria-label="Toggle theme" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }} className="nav-link-hover theme-btn">
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-primary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.75rem', borderRadius: '99px' }}>
+            <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', borderRadius: '99px', letterSpacing: '0.05em' }}>
               START A PROJECT
             </a>
           </div>
 
           {/* Mobile Toggle */}
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }} className="mobile-toggle">
-            <button onClick={toggleTheme} aria-label="Toggle theme" style={{ color: 'var(--text-secondary)' }}>
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }} className="mobile-toggle">
+            <button onClick={toggleTheme} aria-label="Toggle theme" style={{ padding: '0.5rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <button onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
-              <Menu size={24} />
+            <button onClick={() => setMobileMenuOpen(true)} aria-label="Open menu" style={{ padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--surface-elevated)', borderRadius: '50%', border: '1px solid var(--border-color)' }}>
+              <Menu size={18} />
             </button>
           </div>
         </div>
@@ -129,16 +127,16 @@ export const Navbar = ({ show }) => {
           padding: '1.5rem clamp(20px, 4vw, 64px)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-              <span style={{ fontSize: '1rem', fontWeight: 800, letterSpacing: '-0.02em' }}>PRITISH</span>
-              <span style={{ fontSize: '1rem', fontWeight: 800, letterSpacing: '-0.02em' }}>GANGULY</span>
+            <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+              <span style={{ fontSize: '1rem', fontWeight: 800, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>PRITISH</span>
+              <span style={{ fontSize: '1rem', fontWeight: 500, letterSpacing: '-0.02em', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>GANGULY</span>
             </div>
-            <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
-              <X size={24} />
+            <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" style={{ padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--surface-elevated)', borderRadius: '50%', border: '1px solid var(--border-color)' }}>
+              <X size={20} />
             </button>
           </div>
           <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', flex: 1, overflowY: 'auto' }}>
-            {navLinks.map((link) => (
+            {[...navLinks, { name: 'Contact', href: '#contact' }, { name: 'Skills', href: '#skills' }].map((link) => (
               <li key={link.name} className="mobile-link">
                 <a href={link.href} onClick={(e) => handleNavClick(e, link.href)} style={{ fontSize: '2rem', fontWeight: 600 }}>
                   {link.name}
@@ -165,14 +163,14 @@ export const Navbar = ({ show }) => {
           color: var(--text-primary); 
         }
         
-        @media (min-width: 1024px) {
+        @media (min-width: 900px) {
           .desktop-nav { display: flex !important; }
           .mobile-toggle { display: none !important; }
         }
         
-        @media (max-width: 380px) {
-          .nav-brand span {
-            font-size: 0.75rem !important;
+        @media (max-width: 480px) {
+          .brand-last-name {
+            display: none !important;
           }
         }
       `}</style>

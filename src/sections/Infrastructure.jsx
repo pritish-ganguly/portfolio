@@ -44,12 +44,12 @@ export const Infrastructure = () => {
       <div className="container">
         
         <div style={{ marginBottom: '4rem' }}>
-          <span className="eyebrow">13 / INFRASTRUCTURE</span>
+          <span className="eyebrow">12 / INFRASTRUCTURE</span>
           <h2 className="heading-1" style={{ marginBottom: '2rem' }}>
             BEYOND THE BROWSER.
           </h2>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
             <div>
               <h3 className="heading-3" style={{ marginBottom: '1rem', fontSize: '1.25rem' }}>Networking</h3>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>

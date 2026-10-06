@@ -44,7 +44,7 @@ export const SelectedWork = () => {
       
       <div className="section-padding">
         <div className="container" style={{ marginBottom: '4rem' }}>
-          <span className="eyebrow">17 / SELECTED WORK</span>
+          <span className="eyebrow">16 / SELECTED WORK</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '20ch' }}>
             WORK THAT LIVES<br/>OUTSIDE THIS WEBSITE.
           </h2>

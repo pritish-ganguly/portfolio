@@ -48,7 +48,7 @@ export const Contact = () => {
         <div className="contact-grid">
           
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span className="eyebrow">21 / LET'S TALK</span>
+            <span className="eyebrow">19 / LET'S TALK</span>
             <h2 className="heading-1" style={{ marginBottom: '2rem' }}>
               HAVE A PROBLEM<br/>WORTH SOLVING?
             </h2>
@@ -63,7 +63,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <span className="metadata" style={{ display: 'block', marginBottom: '0.25rem' }}>Email</span>
-                  <a href="mailto:pritishganguly07@gmail.com" style={{ fontSize: '1.125rem', fontWeight: 500 }}>pritishganguly07@gmail.com</a>
+                  <a href="mailto:pritishganguly07@gmail.com" style={{ fontSize: '1.125rem', fontWeight: 500, wordBreak: 'break-all' }}>pritishganguly07@gmail.com</a>
                 </div>
               </div>
               

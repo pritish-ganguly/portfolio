@@ -64,7 +64,7 @@ export const WhyMe = () => {
       
       <div className="manifesto-container">
         <div style={{ position: 'absolute', top: '4rem', left: 'clamp(20px, 4vw, 64px)', zIndex: 10 }}>
-          <span className="eyebrow" style={{ color: 'var(--bg-main)', opacity: 0.7 }}>19 / WHY ME</span>
+          <span className="eyebrow" style={{ color: 'var(--bg-main)', opacity: 0.7 }}>02 / WHY ME</span>
         </div>
         
         <div className="manifesto-track">
@@ -96,13 +96,13 @@ export const WhyMe = () => {
         
         .manifesto-track {
           display: flex;
-          width: 600vw;
-          height: 100vh;
+          width: 600%;
+          height: 100svh;
         }
         
         .manifesto-panel {
-          width: 100vw;
-          height: 100vh;
+          width: 100%;
+          height: 100svh;
         }
         
         @media (max-width: 1023px) {
@@ -115,7 +115,7 @@ export const WhyMe = () => {
           .manifesto-panel {
             width: 100%;
             height: auto;
-            min-height: 50vh;
+            min-height: 50svh;
           }
         }
       `}</style>

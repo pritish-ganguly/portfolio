@@ -56,7 +56,7 @@ export const Automation = () => {
       <div className="container">
         
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <span className="eyebrow">06 / AUTOMATION</span>
+          <span className="eyebrow">07 / AUTOMATION</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '20ch', marginInline: 'auto' }}>
             THE BUSYWORK,<br/>MADE TO DO ITSELF.
           </h2>
@@ -77,8 +77,7 @@ export const Automation = () => {
           borderRadius: '24px',
           border: '1px solid var(--border-color)',
           overflowX: 'auto',
-          display: 'flex',
-          justifyContent: 'center'
+          overflowX: 'auto'
         }}>
           
           <div className="pipeline-container" style={{ display: 'flex', alignItems: 'center', minWidth: 'max-content' }}>
@@ -137,11 +136,13 @@ export const Automation = () => {
       <style>{`
         .pipeline-container {
           padding: 1rem 0;
+          width: fit-content;
+          margin: 0 auto;
         }
         
         @media (max-width: 1023px) {
           .pipeline-container {
-            justify-content: flex-start;
+            margin: 0;
           }
         }
       `}</style>

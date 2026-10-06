@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ThemeProvider } from './context/ThemeContext';
 import { Preloader } from './components/Preloader';
 import { Cursor } from './components/Cursor';
-import { ScrollToTop } from './components/ScrollToTop';
 import { Navbar } from './components/Navbar';
 import { Hero } from './sections/Hero';
 import { CinematicVideo } from './sections/CinematicVideo';
+import { Industries } from './sections/Industries';
 import { TheProblem } from './sections/TheProblem';
 import { WhatIBuild } from './sections/WhatIBuild';
 import { Websites } from './sections/Websites';
@@ -27,12 +29,33 @@ import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
 import { NotFound } from './components/NotFound';
 
+gsap.registerPlugin(ScrollTrigger);
+
 function App() {
   const [siteLoaded, setSiteLoaded] = useState(false);
 
-  // Check route for 404
+  useEffect(() => {
+    // CRITICAL BUG FIX: Mobile scroll jitter / pinning jumps
+    // Prevents ScrollTrigger from recalculating pins when mobile address bar shows/hides
+    ScrollTrigger.config({ ignoreMobileResize: true });
+    
+    // Optional: Refresh safely when a true orientation change happens
+    let lastWidth = window.innerWidth;
+    const handleResize = () => {
+      if (window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        ScrollTrigger.refresh();
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Check route for 404 - naive check for GitHub Pages compatibility
   const path = window.location.pathname;
-  if (path !== '/' && path !== '/index.html') {
+  const isBaseOrRoot = path === '/' || path === '/index.html' || path === '/portfolio' || path === '/portfolio/';
+  if (!isBaseOrRoot) {
     return (
       <ThemeProvider>
         <NotFound />
@@ -48,6 +71,8 @@ function App() {
       <main>
         <Hero isLoaded={siteLoaded} />
         <CinematicVideo />
+        <Industries />
+        <WhyMe />
         <TheProblem />
         <WhatIBuild />
         <Websites />
@@ -63,12 +88,10 @@ function App() {
         <TechnologyUniverse />
         <SelectedWork />
         <TechnicalProjects />
-        <WhyMe />
         <Process />
         <Contact />
       </main>
       <Footer />
-      <ScrollToTop />
     </ThemeProvider>
   );
 }

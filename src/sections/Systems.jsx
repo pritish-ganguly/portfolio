@@ -43,7 +43,7 @@ export const Systems = () => {
       <div className="container">
         
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <span className="eyebrow">14 / SYSTEMS</span>
+          <span className="eyebrow">13 / SYSTEMS</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem' }}>
             THE SYSTEM BEHIND THE SCREEN.
           </h2>

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -15,88 +14,85 @@ const problems = [
 ];
 
 export const TheProblem = () => {
-  const [activeProblem, setActiveProblem] = useState(problems[0]);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.problem-card', 
+        { y: 30, opacity: 0 },
+        { 
+          y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power2.out',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 75%'
+          }
+        }
+      );
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="section-padding" style={{ backgroundColor: 'var(--surface-main)' }}>
+    <section ref={containerRef} className="section-padding" style={{ backgroundColor: 'var(--surface-main)' }}>
       <div className="container">
-        <div className="problem-grid">
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '4rem' }} className="problem-layout">
           
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span className="eyebrow">02 / THE PROBLEM</span>
-            <h2 className="heading-1" style={{ marginBottom: '1.5rem' }}>
-              WHAT ARE YOU<br/>TRYING TO FIX?
-            </h2>
-            <p className="body-text" style={{ marginBottom: '3rem' }}>
-              Projects should start with the problem, not the technology.<br/>
-              The right solution depends on what needs to change,<br/>
-              what already exists and what the experience needs to achieve.
-            </p>
-            
-            <div className="visual-panel" style={{ 
-              backgroundColor: 'var(--surface-elevated)', 
-              borderRadius: '24px', 
-              padding: '3rem', 
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              border: '1px solid var(--border-color)',
-              transition: 'all 0.5s ease',
-              borderLeft: `4px solid ${activeProblem.color}`
-            }}>
-              <h3 className="heading-3" style={{ marginBottom: '1rem', color: activeProblem.color }}>{activeProblem.title}</h3>
-              <p className="body-text" style={{ color: 'var(--text-primary)', fontSize: '1.25rem' }}>
-                {activeProblem.desc}
+          <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+            <div className="problem-sticky" style={{ position: 'sticky', top: '8rem' }}>
+              <span className="eyebrow">03 / THE PROBLEM</span>
+              <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '15ch' }}>
+                WHAT ARE YOU<br/>TRYING TO FIX?
+              </h2>
+              <p className="body-text" style={{ maxWidth: '45ch' }}>
+                Projects should start with the problem, not the technology. 
+                The right solution depends on what needs to change, 
+                what already exists and what the experience needs to achieve.
               </p>
             </div>
           </div>
           
-          <div className="interactive-list" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', justifyContent: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem' }} className="problem-cards-grid">
             {problems.map((prob) => (
-              <button 
+              <div 
                 key={prob.id}
-                onClick={() => setActiveProblem(prob)}
-                onMouseEnter={() => setActiveProblem(prob)}
+                className="problem-card"
                 style={{
-                  textAlign: 'left',
-                  padding: '2rem',
-                  backgroundColor: activeProblem.id === prob.id ? 'var(--text-primary)' : 'transparent',
-                  color: activeProblem.id === prob.id ? 'var(--bg-main)' : 'var(--text-secondary)',
-                  borderRadius: '16px',
-                  border: activeProblem.id === prob.id ? '1px solid transparent' : '1px solid var(--border-color)',
-                  transition: 'all 0.3s ease',
+                  padding: '2.5rem',
+                  backgroundColor: 'var(--surface-elevated)',
+                  borderRadius: '24px',
+                  border: '1px solid var(--border-color)',
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
+                  flexDirection: 'column',
+                  gap: '1rem',
+                  borderLeft: `4px solid ${prob.color}`
                 }}
               >
-                <span style={{ fontSize: '1.5rem', fontWeight: 600 }}>{prob.title}</span>
-                {activeProblem.id === prob.id && <ArrowRight size={24} />}
-              </button>
+                <h3 className="heading-3" style={{ fontSize: '1.25rem', color: 'var(--text-primary)' }}>{prob.title}</h3>
+                <p className="body-text" style={{ fontSize: '1.0625rem' }}>{prob.desc}</p>
+              </div>
             ))}
           </div>
           
         </div>
+        
       </div>
       
       <style>{`
-        .problem-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 4rem;
-        }
-        
         @media (min-width: 1024px) {
-          .problem-grid {
-            grid-template-columns: 1fr 1fr;
+          .problem-layout {
+            grid-template-columns: 0.8fr 1.2fr !important;
+            align-items: start;
+          }
+          .problem-cards-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
           }
         }
         
         @media (max-width: 1023px) {
-          .visual-panel {
-            margin-bottom: 2rem;
-            min-height: 250px;
+          .problem-sticky {
+            position: relative !important;
+            top: 0 !important;
           }
         }
       `}</style>

@@ -71,7 +71,7 @@ export const Footer = () => {
               <span className="metadata" style={{ color: 'var(--text-secondary)' }}>Web. Intelligence. Infrastructure.</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <a href="mailto:pritishganguly07@gmail.com" style={{ fontSize: '1.125rem', fontWeight: 500, transition: 'color 0.2s' }} className="nav-link-hover">pritishganguly07@gmail.com</a>
+              <a href="mailto:pritishganguly07@gmail.com" style={{ fontSize: '1.125rem', fontWeight: 500, transition: 'color 0.2s', wordBreak: 'break-all' }} className="nav-link-hover">pritishganguly07@gmail.com</a>
               <span className="metadata" style={{ color: 'var(--text-secondary)' }}>Kolkata, India</span>
             </div>
           </div>
@@ -106,14 +106,43 @@ export const Footer = () => {
           display: 'flex', 
           justifyContent: 'space-between', 
           flexWrap: 'wrap', 
-          gap: '1rem',
+          gap: '2rem',
           alignItems: 'center'
         }}>
           <span className="metadata" style={{ color: 'var(--text-secondary)' }}>&copy; {currentYear} Pritish Ganguly.</span>
-          <span className="metadata" style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <div style={{ width: '6px', height: '6px', backgroundColor: 'var(--accent)', borderRadius: '50%' }}></div>
-            All systems operational.
-          </span>
+          
+          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <span className="metadata" style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{ width: '6px', height: '6px', backgroundColor: 'var(--accent)', borderRadius: '50%' }}></div>
+              All systems operational.
+            </span>
+            
+            <button 
+              onClick={() => {
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                window.scrollTo({
+                  top: 0,
+                  behavior: prefersReducedMotion ? 'auto' : 'smooth'
+                });
+              }}
+              aria-label="Back to top"
+              className="back-to-top-btn metadata"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                backgroundColor: 'transparent',
+                border: 'none',
+                color: 'var(--text-primary)',
+                cursor: 'pointer',
+                padding: '0.5rem 1rem',
+                margin: '-0.5rem -1rem', // Expand touch target
+                transition: 'color 0.2s ease'
+              }}
+            >
+              BACK TO TOP <ArrowRight size={14} style={{ transform: 'rotate(-90deg)' }} />
+            </button>
+          </div>
         </div>
         
       </div>
@@ -139,6 +168,16 @@ export const Footer = () => {
         }
         .footer-link:hover {
           color: var(--accent);
+        }
+        
+        .back-to-top-btn:hover {
+          color: var(--accent) !important;
+        }
+        
+        .back-to-top-btn:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 2px;
+          border-radius: 4px;
         }
       `}</style>
     </footer>

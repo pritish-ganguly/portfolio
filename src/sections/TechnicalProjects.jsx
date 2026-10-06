@@ -7,7 +7,7 @@ export const TechnicalProjects = () => {
       <div className="container">
         
         <div style={{ marginBottom: '4rem' }}>
-          <span className="eyebrow">18 / TECHNICAL WORK</span>
+          <span className="eyebrow">17 / TECHNICAL WORK</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '20ch', overflowWrap: 'anywhere' }}>
             WHEN THE PROBLEM GETS TECHNICAL.
           </h2>

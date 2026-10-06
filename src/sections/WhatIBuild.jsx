@@ -48,11 +48,11 @@ export const WhatIBuild = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ backgroundColor: 'var(--bg-main)', overflow: 'hidden' }}>
+    <section id="services" ref={sectionRef} style={{ backgroundColor: 'var(--bg-main)', overflow: 'hidden' }}>
       
       <div className="section-padding">
         <div className="container" style={{ marginBottom: '4rem' }}>
-          <span className="eyebrow">03 / THE WORK</span>
+          <span className="eyebrow">04 / THE WORK</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '15ch' }}>
             FROM DIGITAL EXPERIENCES TO WORKING SYSTEMS.
           </h2>
@@ -78,8 +78,8 @@ export const WhatIBuild = () => {
                 position: 'relative',
                 overflow: 'hidden'
               }}>
-                <div style={{ position: 'absolute', right: '-20%', bottom: '-20%', opacity: 0.05, zIndex: 0 }}>
-                  <cat.icon size={400} />
+                <div style={{ position: 'absolute', right: '-20%', bottom: '-20%', opacity: 0.05, zIndex: 0, pointerEvents: 'none' }}>
+                  <cat.icon size={400} style={{ maxWidth: '100%', height: 'auto' }} />
                 </div>
                 
                 <div style={{ zIndex: 1 }}>

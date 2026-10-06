@@ -45,7 +45,7 @@ export const Commerce = () => {
       <div className="container">
         
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <span className="eyebrow">10 / COMMERCE</span>
+          <span className="eyebrow">09 / COMMERCE</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem' }}>
             FROM PRODUCT TO PURCHASE.
           </h2>

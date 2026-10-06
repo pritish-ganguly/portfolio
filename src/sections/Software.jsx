@@ -59,14 +59,14 @@ export const Software = () => {
         <div className="software-grid">
           
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span className="eyebrow">05 / SOFTWARE</span>
-            <h2 className="heading-1" style={{ marginBottom: '2rem' }}>
-              SOFTWARE WITH<br/>A JOB TO DO.
+            <span className="eyebrow">06 / SOFTWARE</span>
+            <h2 className="heading-1" style={{ marginBottom: '2rem', wordBreak: 'break-word', hyphens: 'auto' }}>
+              SOFTWARE WITH A JOB TO DO.
             </h2>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginTop: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.75rem', marginTop: '1rem' }}>
               {capabilities.map((cap, i) => (
-                <div key={i} style={{ padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '12px', color: 'var(--text-secondary)', fontSize: '0.875rem', fontWeight: 600 }}>
+                <div key={i} style={{ padding: '0.75rem', border: '1px solid var(--border-color)', borderRadius: '12px', color: 'var(--text-secondary)', fontSize: '0.875rem', fontWeight: 600, wordBreak: 'break-word' }}>
                   {cap}
                 </div>
               ))}

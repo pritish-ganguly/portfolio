@@ -13,23 +13,22 @@ export const CinematicVideo = () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     if (prefersReducedMotion) {
-      return; // Skip complex animation, rely on CSS fallback
+      return;
     }
 
     const mm = gsap.matchMedia();
     
     mm.add("(min-width: 1024px)", () => {
       const ctx = gsap.context(() => {
-        // We pin the wrapper and scale the video up
         gsap.to(videoWrapperRef.current, {
-          width: '100vw',
-          height: '100vh',
+          width: '100%',
+          height: '100svh',
           borderRadius: '0px',
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top top',
-            end: '+=150%', // Scroll duration
+            end: '+=150%',
             scrub: true,
             pin: pinWrapperRef.current,
             invalidateOnRefresh: true,
@@ -42,20 +41,20 @@ export const CinematicVideo = () => {
     });
     
     mm.add("(max-width: 1023px)", () => {
+      // For tablet and mobile, prioritize native scrolling.
+      // Do not pin to avoid fighting touch scrolling.
+      // Use a subtle scale effect that feels cinematic but flows naturally in the document.
       const ctx = gsap.context(() => {
         gsap.to(videoWrapperRef.current, {
-          width: '100vw',
-          height: '50vh', // Mobile doesn't necessarily need full vh
+          width: '100%',
           borderRadius: '0px',
-          ease: 'none',
+          ease: 'power1.out',
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top top',
-            end: '+=100%',
+            start: 'top 80%',
+            end: 'bottom 20%',
             scrub: true,
-            pin: pinWrapperRef.current,
-            invalidateOnRefresh: true,
-            anticipatePin: 1
+            pin: false // Removed pinning for touch devices
           }
         });
       }, containerRef);
@@ -67,22 +66,19 @@ export const CinematicVideo = () => {
   }, []);
 
   return (
-    <section ref={containerRef} style={{ position: 'relative', backgroundColor: 'var(--bg-main)' }}>
-      {/* 
-        This wrapper is what gets pinned. It holds the video centered.
-        By pinning this inner div, the parent section acts as the scroll track 
-        and reserves the necessary height (+150% from ScrollTrigger end).
-      */}
+    <section ref={containerRef} style={{ position: 'relative', backgroundColor: 'var(--bg-main)', overflow: 'hidden' }}>
       <div 
         ref={pinWrapperRef} 
         style={{ 
           width: '100%', 
-          height: '100vh', 
+          minHeight: '100svh', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          padding: '2rem 0' // Provide spacing for the unpinned mobile version
         }}
+        className="pin-wrapper"
       >
         <div 
           ref={videoWrapperRef} 
@@ -105,29 +101,41 @@ export const CinematicVideo = () => {
       
       <style>{`
         .video-cinematic-wrapper {
-          width: 70vw;
-          height: 60vh;
-          max-width: 1200px;
+          width: 70%;
+          height: 70svh;
+          max-width: 1400px;
           border-radius: 24px;
           overflow: hidden;
           box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-          will-change: width, height, border-radius;
+          will-change: width, border-radius;
         }
         
         @media (max-width: 1023px) {
+          .pin-wrapper {
+            min-height: auto !important;
+            padding: 4rem 0 !important;
+          }
           .video-cinematic-wrapper {
-            width: 85vw;
-            height: 40vh;
+            width: 85%;
+            height: 50svh;
             border-radius: 16px;
+          }
+        }
+        
+        @media (max-width: 767px) {
+          .video-cinematic-wrapper {
+            width: 90%;
+            height: 40svh;
+            border-radius: 12px;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
           .video-cinematic-wrapper {
-            width: 90vw;
-            height: 60vh;
+            width: 90%;
+            height: 60svh;
             max-width: 1000px;
-            margin: 4rem auto;
+            margin: 0 auto;
             border-radius: 16px;
           }
         }
