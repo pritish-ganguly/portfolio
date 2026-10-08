@@ -2,12 +2,14 @@ import React, { useRef, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useContactModal } from '../components/ModalContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const currentYear = new Date().getFullYear();
 
 export const Footer = () => {
+  const { openModal } = useContactModal();
   const footerRef = useRef(null);
 
   useEffect(() => {
@@ -57,9 +59,9 @@ export const Footer = () => {
           }}>
             LET'S<br/>BUILD<br/>SOMETHING<br/>USEFUL.
           </h2>
-          <a href="#contact" className="btn-primary" style={{ padding: '1rem 2.5rem', borderRadius: '99px', fontSize: '1rem' }}>
+          <button onClick={(e) => { e.preventDefault(); openModal(e); }} className="btn-primary" style={{ padding: '1rem 2.5rem', borderRadius: '99px', fontSize: '1rem' }}>
             START A CONVERSATION <ArrowRight size={20} />
-          </a>
+          </button>
         </div>
         
         <div className="footer-grid footer-reveal">

@@ -7,22 +7,22 @@ export const Infrastructure = () => {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!prefersReducedMotion && visualRef.current) {
-      const nodes = visualRef.current.querySelectorAll('.net-node');
+      const nodes = Array.from(visualRef.current.querySelectorAll('.net-node'));
+      
+      const xSetters = nodes.map(node => gsap.quickTo(node, "x", { duration: 1, ease: "power2.out" }));
+      const ySetters = nodes.map(node => gsap.quickTo(node, "y", { duration: 1, ease: "power2.out" }));
       
       const onMove = (e) => {
-        const { left, top, width, height } = visualRef.current.getBoundingClientRect();
-        const x = (e.clientX - left) / width - 0.5;
-        const y = (e.clientY - top) / height - 0.5;
+        const x = (e.clientX / window.innerWidth) - 0.5;
+        const y = (e.clientY / window.innerHeight) - 0.5;
 
-        gsap.to(nodes, {
-          x: (i) => x * (i % 2 === 0 ? 15 : -10),
-          y: (i) => y * (i % 3 === 0 ? 15 : -10),
-          duration: 1,
-          ease: 'power2.out'
+        nodes.forEach((_, i) => {
+          xSetters[i](x * (i % 2 === 0 ? 15 : -10));
+          ySetters[i](y * (i % 3 === 0 ? 15 : -10));
         });
       };
       
-      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mousemove', onMove, { passive: true });
       return () => {
         window.removeEventListener('mousemove', onMove);
       };

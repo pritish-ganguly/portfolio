@@ -1,54 +1,59 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const stages = [
-  "01 UNDERSTAND", "02 ANALYSE", "03 PLAN", 
-  "04 BUILD", "05 TEST", "06 DELIVER"
+  { num: '01', title: 'UNDERSTAND', desc: 'We start with your business goals, target audience, and the actual problem you are trying to solve.' },
+  { num: '02', title: 'PLAN', desc: 'I architect the system, design the user experience, and choose the right technical stack for the job.' },
+  { num: '03', title: 'BUILD', desc: 'I write clean, scalable code across frontend, backend, and infrastructure to bring the plan to life.' },
+  { num: '04', title: 'REFINE', desc: 'Rigorous testing for performance, security, responsive behavior, and perfect animations.' },
+  { num: '05', title: 'DELIVER', desc: 'Safe deployment, documentation, and handover of a digital product that actually works.' }
 ];
 
 export const Process = () => {
   const containerRef = useRef(null);
-  const nodesRef = useRef([]);
   const trackRef = useRef(null);
   const progressRef = useRef(null);
+  const nodesRef = useRef([]);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let stInstance;
+    let nodeTriggers = [];
     
-    let ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      mm.add({
-        isDesktop: "(min-width: 1024px)",
-        isMobile: "(max-width: 1023px)"
-      }, (context) => {
-        const { isDesktop, isMobile } = context.conditions;
+    // We use a small timeout to ensure DOM layout is complete before measuring
+    const initProcessLayout = () => {
+      // Clear old triggers if recalculating
+      if (stInstance) stInstance.kill();
+      nodeTriggers.forEach(t => t.kill());
+      nodeTriggers = [];
+      
+      const ctx = gsap.context(() => {
+        if (!nodesRef.current[0] || !nodesRef.current[4] || !containerRef.current) return;
         
-        // Reset styles for recalculation
-        gsap.set(progressRef.current, { clearProps: 'all' });
-        gsap.set(nodesRef.current, { clearProps: 'all' });
+        const isDesktop = window.innerWidth >= 1024;
+        const isMobile = !isDesktop;
         
-        // Calculate dynamic dimensions
         const firstNode = nodesRef.current[0];
-        const lastNode = nodesRef.current[5];
-        if (!firstNode || !lastNode || !trackRef.current) return;
+        const lastNode = nodesRef.current[4];
         
-        const firstRect = firstNode.getBoundingClientRect();
-        const lastRect = lastNode.getBoundingClientRect();
-        const containerRect = containerRef.current.getBoundingClientRect();
+        const visualRef = document.querySelector('.process-visual');
+        const visualRect = visualRef.getBoundingClientRect();
+        
+        const firstRect = firstNode.querySelector('.process-circle').getBoundingClientRect();
+        const lastRect = lastNode.querySelector('.process-circle').getBoundingClientRect();
         
         if (isDesktop) {
           // Horizontal layout
-          const trackLeft = firstRect.left - containerRect.left + (firstRect.width / 2);
-          const trackRight = lastRect.left - containerRect.left + (lastRect.width / 2);
+          const trackLeft = firstRect.left - visualRect.left + (firstRect.width / 2);
+          const trackRight = lastRect.left - visualRect.left + (lastRect.width / 2);
           const trackWidth = trackRight - trackLeft;
           
           gsap.set(trackRef.current, {
             left: trackLeft,
-            top: 24, // Matches node circle center
+            top: firstRect.top - visualRect.top + (firstRect.height / 2), 
             width: trackWidth,
             height: 2,
             bottom: 'auto'
@@ -58,21 +63,20 @@ export const Process = () => {
             width: '100%',
             height: '100%',
             scaleX: 0,
+            scaleY: 1,
             transformOrigin: 'left center'
           });
           
         } else {
           // Vertical layout
-          const trackTop = firstRect.top - containerRect.top + (firstRect.height / 2);
-          const trackBottom = lastRect.top - containerRect.top + (lastRect.height / 2);
+          const trackTop = firstRect.top - visualRect.top + (firstRect.height / 2);
+          const trackBottom = lastRect.top - visualRect.top + (lastRect.height / 2);
           const trackHeight = trackBottom - trackTop;
           
-          // Left offset depends on mobile layout structure (the circle is 48px wide)
-          // It's shifted by CSS. Let's place it exactly at the center of the first circle.
-          const circleCenterLeft = firstNode.querySelector('.process-circle').getBoundingClientRect().left - containerRect.left + 24;
+          const circleCenterLeft = firstRect.left - visualRect.left + (firstRect.width / 2);
           
           gsap.set(trackRef.current, {
-            left: circleCenterLeft,
+            left: circleCenterLeft - 1, // center the 2px line
             top: trackTop,
             height: trackHeight,
             width: 2,
@@ -83,44 +87,43 @@ export const Process = () => {
             width: '100%',
             height: '100%',
             scaleY: 0,
+            scaleX: 1,
             transformOrigin: 'top center'
           });
         }
 
         if (prefersReducedMotion) {
-          gsap.set(progressRef.current, { scaleX: isDesktop ? 1 : undefined, scaleY: isMobile ? 1 : undefined });
+          gsap.set(progressRef.current, { scaleX: 1, scaleY: 1 });
           gsap.set(nodesRef.current, { opacity: 1 });
           gsap.set('.process-circle', { borderColor: 'var(--accent)', color: 'var(--accent)' });
           return;
         }
 
         // Setup ScrollTrigger for progress line
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top center",
-            end: "bottom 75%",
-            scrub: true
-          }
-        });
-
-        tl.to(progressRef.current, {
-          scaleX: isDesktop ? 1 : undefined,
-          scaleY: isMobile ? 1 : undefined,
-          ease: 'none'
+        stInstance = ScrollTrigger.create({
+          trigger: containerRef.current,
+          start: isDesktop ? "top center" : "top 60%",
+          end: isDesktop ? "bottom 75%" : "bottom 60%",
+          animation: gsap.to(progressRef.current, {
+            scaleX: isDesktop ? 1 : undefined,
+            scaleY: isMobile ? 1 : undefined,
+            ease: 'none'
+          }),
+          scrub: true
         });
 
         // Setup individual node activation
         nodesRef.current.forEach((node, index) => {
-          ScrollTrigger.create({
+          const t = ScrollTrigger.create({
             trigger: node,
-            start: "top center+=10%",
-            end: "bottom top",
+            start: isDesktop ? "top center+=10%" : "top 70%",
+            end: isDesktop ? "bottom top" : "bottom 30%",
             onEnter: () => {
               gsap.to(node.querySelector('.process-circle'), {
                 borderColor: 'var(--accent)',
                 color: 'var(--accent)',
                 backgroundColor: 'var(--surface-elevated)',
+                scale: 1.1,
                 duration: 0.3
               });
               gsap.to(node, { opacity: 1, duration: 0.3 });
@@ -130,25 +133,37 @@ export const Process = () => {
                 borderColor: 'var(--border-color)',
                 color: 'var(--text-secondary)',
                 backgroundColor: 'var(--bg-main)',
+                scale: 1,
                 duration: 0.3
               });
-              gsap.to(node, { opacity: 0.5, duration: 0.3 });
+              gsap.to(node, { opacity: 0.4, duration: 0.3 });
             }
           });
+          nodeTriggers.push(t);
           // Set initial inactive state
-          gsap.set(node, { opacity: 0.5 });
+          gsap.set(node, { opacity: 0.4 });
         });
 
-      });
-    }, containerRef);
+      }, containerRef);
+    };
+
+    // Use setTimeout to ensure fonts and layout are ready
+    const timer = setTimeout(initProcessLayout, 100);
     
-    // Recalculate on resize
-    const onResize = () => ctx.revert(); // Force matchMedia to run again if needed, or simply ScrollTrigger.refresh
-    window.addEventListener('resize', () => ScrollTrigger.refresh());
+    // ResizeObserver is much more reliable than window.resize
+    const resizeObserver = new ResizeObserver(() => {
+      initProcessLayout();
+    });
+    
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
 
     return () => {
-      ctx.revert();
-      window.removeEventListener('resize', () => ScrollTrigger.refresh());
+      clearTimeout(timer);
+      if (stInstance) stInstance.kill();
+      nodeTriggers.forEach(t => t.kill());
+      resizeObserver.disconnect();
     };
   }, []);
 
@@ -182,7 +197,6 @@ export const Process = () => {
           
           <div className="process-grid">
             {stages.map((stage, i) => {
-              const [num, title] = stage.split(' ');
               return (
                 <div 
                   key={i} 
@@ -197,15 +211,18 @@ export const Process = () => {
                     border: '4px solid var(--surface-main)',
                     boxShadow: '0 0 0 2px var(--border-color)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    marginBottom: '2rem',
+                    marginBottom: '1.5rem',
                     color: 'var(--text-secondary)',
                     fontWeight: 700,
                     fontSize: '0.875rem',
                     transition: 'box-shadow 0.3s ease'
                   }}>
-                    {num}
+                    {stage.num}
                   </div>
-                  <h3 className="heading-3" style={{ fontSize: '1.25rem', textAlign: 'center' }}>{title}</h3>
+                  <h3 className="heading-3 process-title" style={{ fontSize: '1.25rem', textAlign: 'center', marginBottom: '0.5rem' }}>{stage.title}</h3>
+                  <p className="body-text process-desc" style={{ textAlign: 'center', fontSize: '0.875rem', lineHeight: 1.5, maxWidth: '24ch' }}>
+                    {stage.desc}
+                  </p>
                 </div>
               );
             })}
@@ -218,7 +235,7 @@ export const Process = () => {
       <style>{`
         .process-grid {
           display: grid;
-          grid-template-columns: repeat(6, 1fr);
+          grid-template-columns: repeat(5, 1fr);
           gap: 1rem;
         }
         
@@ -240,6 +257,16 @@ export const Process = () => {
             flex-direction: row !important;
             align-items: center !important;
             gap: 2rem;
+          }
+          
+          .process-title {
+            text-align: left !important;
+            margin-bottom: 0.25rem !important;
+          }
+          
+          .process-desc {
+            text-align: left !important;
+            max-width: none !important;
           }
           
           .process-circle {

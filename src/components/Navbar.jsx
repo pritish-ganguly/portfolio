@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { Menu, X, Moon, Sun } from 'lucide-react';
 import gsap from 'gsap';
+import { useContactModal } from './ModalContext';
 
 export const Navbar = ({ show }) => {
+  const { openModal } = useContactModal();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const navRef = useRef(null);
@@ -100,9 +102,9 @@ export const Navbar = ({ show }) => {
             <button onClick={toggleTheme} aria-label="Toggle theme" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }} className="nav-link-hover theme-btn">
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', borderRadius: '99px', letterSpacing: '0.05em' }}>
+            <button onClick={(e) => { e.preventDefault(); openModal(e); }} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', borderRadius: '99px', letterSpacing: '0.05em' }}>
               START A PROJECT
-            </a>
+            </button>
           </div>
 
           {/* Mobile Toggle */}
@@ -144,9 +146,9 @@ export const Navbar = ({ show }) => {
               </li>
             ))}
             <li className="mobile-link" style={{ marginTop: '2rem' }}>
-              <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '1rem' }}>
+              <button onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal(e); }} className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '1rem' }}>
                 START A PROJECT
-              </a>
+              </button>
             </li>
           </ul>
         </div>

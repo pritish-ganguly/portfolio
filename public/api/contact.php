@@ -37,16 +37,16 @@ if (json_last_error() !== JSON_ERROR_NONE || !$data) {
 }
 
 // 4. Honeypot check
-if (!empty($data['website_url'])) {
+if (!empty($data['honeypot']) || !empty($data['website_url'])) {
     echo json_encode(["success" => true]); // Silent fail for bots
     exit;
 }
 
-// 5. Time-based validation (requires frontend to send start_time)
-if (isset($data['start_time'])) {
-    $submissionTime = time() - intval($data['start_time']);
-    if ($submissionTime < 2 || $submissionTime > 3600) {
-        // Form submitted in less than 2 seconds or took > 1 hour
+// 5. Time-based validation (requires frontend to send timestamp)
+if (isset($data['timestamp'])) {
+    $submissionTime = time() - intval($data['timestamp']);
+    if ($submissionTime < 2 || $submissionTime > 7200) {
+        // Form submitted in less than 2 seconds or took > 2 hours
         echo json_encode(["success" => true]); // Silent fail for bots
         exit;
     }
@@ -63,7 +63,7 @@ if (time() - $last_submit < 30) {
 $_SESSION['last_submit'] = time();
 
 // 7. Validate required fields
-$required = ['name', 'email', 'service', 'message'];
+$required = ['name', 'email', 'projectType', 'currency', 'budget', 'message'];
 foreach ($required as $field) {
     if (empty(trim($data[$field] ?? ''))) {
         http_response_code(400);
@@ -88,18 +88,18 @@ if (!filter_var($emailRaw, FILTER_VALIDATE_EMAIL)) {
 }
 
 // 10. Sanitize inputs completely (Prevent XSS and header injection)
-// filter_var removes newlines from email, stopping header injection in Reply-To
 $email = filter_var($emailRaw, FILTER_SANITIZE_EMAIL);
 $name = htmlspecialchars(strip_tags(trim($data['name'])), ENT_QUOTES, 'UTF-8');
-$company = isset($data['company']) ? htmlspecialchars(strip_tags(trim($data['company'])), ENT_QUOTES, 'UTF-8') : 'N/A';
-$service = htmlspecialchars(strip_tags(trim($data['service'])), ENT_QUOTES, 'UTF-8');
-$budget = isset($data['budget']) ? htmlspecialchars(strip_tags(trim($data['budget'])), ENT_QUOTES, 'UTF-8') : 'Not specified';
+$company = !empty($data['company']) ? htmlspecialchars(strip_tags(trim($data['company'])), ENT_QUOTES, 'UTF-8') : 'Not provided';
+$projectType = htmlspecialchars(strip_tags(trim($data['projectType'])), ENT_QUOTES, 'UTF-8');
+$currency = htmlspecialchars(strip_tags(trim($data['currency'])), ENT_QUOTES, 'UTF-8');
+$budget = htmlspecialchars(strip_tags(trim($data['budget'])), ENT_QUOTES, 'UTF-8');
 $message = htmlspecialchars(strip_tags(trim($data['message'])), ENT_QUOTES, 'UTF-8');
 
 // 11. Limit message length
-if (strlen($message) > 3000) {
+if (strlen($message) > 5000) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Message is too long (max 3000 chars)."]);
+    echo json_encode(["success" => false, "message" => "Message is too long (max 5000 chars)."]);
     exit;
 }
 if (strlen($message) < 10) {
@@ -109,19 +109,24 @@ if (strlen($message) < 10) {
 }
 
 // 12. Email construction
-$to = "pritishganguly07@gmail.com";
-$subject = "New Portfolio Enquiry - " . $service;
+$to = "prithishganguly07@gmail.com";
+$subject = "New Project Inquiry - " . $name;
+$dateSubmitted = date('Y-m-d H:i');
 
-$emailContent = "You have received a new enquiry from your portfolio.\n\n";
-$emailContent .= "Name: $name\n";
-$emailContent .= "Email: $email\n";
-$emailContent .= "Company: $company\n";
-$emailContent .= "Service: $service\n";
-$emailContent .= "Budget: $budget\n\n";
-$emailContent .= "Message:\n$message\n";
+$emailContent = "NEW PROJECT INQUIRY\n";
+$emailContent .= "────────────────────────\n\n";
+$emailContent .= "Name:\n$name\n\n";
+$emailContent .= "Email:\n$email\n\n";
+$emailContent .= "Company:\n$company\n\n";
+$emailContent .= "Project Type:\n$projectType\n\n";
+$emailContent .= "Currency:\n$currency\n\n";
+$emailContent .= "Budget:\n$budget\n\n";
+$emailContent .= "Message:\n$message\n\n";
+$emailContent .= "Submitted:\n$dateSubmitted\n\n";
+$emailContent .= "────────────────────────\n";
+$emailContent .= "Portfolio Contact Form\n";
 
 // 13. Safe headers
-// Use HTTP_HOST securely, fallback to a safe default if missing
 $host = isset($_SERVER['HTTP_HOST']) ? preg_replace('/[^a-zA-Z0-9.-]/', '', $_SERVER['HTTP_HOST']) : 'portfolio';
 $fromEmail = "noreply@" . $host;
 

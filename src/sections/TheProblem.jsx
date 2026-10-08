@@ -45,9 +45,7 @@ export const TheProblem = () => {
                 WHAT ARE YOU<br/>TRYING TO FIX?
               </h2>
               <p className="body-text" style={{ maxWidth: '45ch' }}>
-                Projects should start with the problem, not the technology. 
-                The right solution depends on what needs to change, 
-                what already exists and what the experience needs to achieve.
+                Good digital work starts with understanding what you want to achieve, what your users need, what is currently broken, and what your business actually requires to move forward.
               </p>
             </div>
           </div>

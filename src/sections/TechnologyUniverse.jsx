@@ -9,7 +9,7 @@ const techGroups = [
   { name: 'AI & ML', items: ['Python', 'Scikit-learn', 'NLP & TF-IDF', 'Linear SVM & RF', 'GenAI & LLMs (Learning)'] },
   { name: 'SECURITY & MONITORING', items: ['Threat Detection', 'Network Monitoring', 'Risk Scoring', 'Scapy'] },
   { name: 'WEB DEVELOPMENT', items: ['React & Vite', 'JavaScript', 'HTML/CSS', 'PHP', 'WordPress'] },
-  { name: 'CLOUD & SYSTEMS', items: ['Linux', 'Windows', 'Basic Cloud Computing', 'Git & GitHub'] },
+  { name: 'CLOUD & SYSTEMS', items: ['Linux', 'Windows', 'Cloud Computing', 'AWS', 'Azure', 'Git & GitHub'] },
   { name: 'DIGITAL EXPERIENCES', items: ['UI / UX Design', 'Responsive Design', 'SEO', 'Automation'] }
 ];
 
@@ -49,7 +49,7 @@ export const TechnologyUniverse = () => {
       <div className="container">
         
         <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
-          <span className="eyebrow">15 / THE STACK</span>
+          <span className="eyebrow">15 / THE TECHNOLOGY BEHIND THE WORK</span>
           <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '20ch', marginInline: 'auto' }}>
             VERIFIED EXPERTISE & DIGITAL FOUNDATIONS.
           </h2>

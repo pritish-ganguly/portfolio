@@ -11,6 +11,9 @@ export const TechnicalProjects = () => {
           <h2 className="heading-1" style={{ marginBottom: '1.5rem', maxWidth: '20ch', overflowWrap: 'anywhere' }}>
             WHEN THE PROBLEM GETS TECHNICAL.
           </h2>
+          <p className="body-text" style={{ maxWidth: '48ch' }}>
+            These are specific engineering, automation, and AI challenges I've solved. They represent how I approach complex backend architecture, intelligent systems, and performance-critical infrastructure.
+          </p>
         </div>
         
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem' }}>

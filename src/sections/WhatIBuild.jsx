@@ -6,11 +6,11 @@ import { Globe, Code2, Bot, Brain, Server, Search } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 
 const categories = [
-  { num: '01', title: 'WEB', desc: 'Custom, high-performance websites and e-commerce platforms built for scale and conversion.', icon: Globe, color: '#0066CC' },
-  { num: '02', title: 'SOFTWARE', desc: 'Internal tools, dashboards, and full-stack web applications to run your operations.', icon: Code2, color: '#10B981' },
-  { num: '03', title: 'AUTOMATION', desc: 'Custom workflows and agents that eliminate repetitive tasks and connect your systems.', icon: Bot, color: '#F59E0B' },
-  { num: '04', title: 'AI', desc: 'Practical machine learning and generative AI implementations that solve actual business problems.', icon: Brain, color: '#8B5CF6' },
-  { num: '05', title: 'INFRASTRUCTURE', desc: 'Reliable cloud architecture, networking, and security foundations for digital products.', icon: Server, color: '#06B6D4' },
+  { num: '01', title: 'WEB', desc: 'Build fast, responsive and purposeful websites and web applications.', icon: Globe, color: '#0066CC' },
+  { num: '02', title: 'SOFTWARE', desc: 'Connect interfaces, applications, data and infrastructure into reliable digital systems.', icon: Code2, color: '#10B981' },
+  { num: '03', title: 'AUTOMATION', desc: 'Reduce repetitive work with intelligent workflows and automation.', icon: Bot, color: '#F59E0B' },
+  { num: '04', title: 'AI / ML', desc: 'Build practical AI-powered features and applications around real use cases.', icon: Brain, color: '#8B5CF6' },
+  { num: '05', title: 'INFRASTRUCTURE', desc: 'Design and build practical technical solutions around connectivity, systems and infrastructure.', icon: Server, color: '#06B6D4' },
   { num: '06', title: 'GROWTH', desc: 'Technical SEO and discovery optimization to ensure your digital presence reaches its audience.', icon: Search, color: '#EC4899' },
 ];
 
@@ -57,7 +57,7 @@ export const WhatIBuild = () => {
             FROM DIGITAL EXPERIENCES TO WORKING SYSTEMS.
           </h2>
           <p className="body-text">
-            I work across websites, digital products, AI-powered systems,<br/>
+            As a full-stack developer, I work across websites, digital products, AI-powered systems,<br/>
             automation and technical infrastructure, starting with the problem<br/>
             before deciding what to build.
           </p>

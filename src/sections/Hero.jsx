@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import gsap from 'gsap';
+import { useContactModal } from '../components/ModalContext';
 
 const greetings = [
   { text: 'Hello', lang: 'English' },
@@ -22,6 +23,7 @@ const greetings = [
 ];
 
 export const Hero = ({ isLoaded }) => {
+  const { openModal } = useContactModal();
   const containerRef = useRef(null);
   const visualRef = useRef(null);
   const greetingRef = useRef(null);
@@ -126,38 +128,49 @@ export const Hero = ({ isLoaded }) => {
         <div className="hero-grid">
           
           {/* Text Content */}
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <div className="hero-reveal" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-              <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--accent)' }}></div>
-              <span className="metadata" style={{ color: 'var(--accent)', letterSpacing: '0.1em' }}>INDEPENDENT DIGITAL PARTNER</span>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: 0 }}>
+            <div className="hero-reveal" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2.5rem', padding: '0.5rem 1rem', border: '1px solid var(--border-color)', borderRadius: '99px', backgroundColor: 'var(--surface-main)', width: 'fit-content' }}>
+              <div className="status-indicator" style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981', position: 'relative' }}>
+                <div className="status-glow" style={{ position: 'absolute', inset: 0, borderRadius: '50%', backgroundColor: '#10B981', opacity: 0.6 }}></div>
+              </div>
+              <span className="metadata" style={{ margin: 0, letterSpacing: '0.05em', color: 'var(--text-primary)', fontWeight: 600 }}>AVAILABLE FOR NEW PROJECTS</span>
             </div>
             
             <h1 className="hero-reveal" style={{ 
-              fontSize: 'clamp(2.5rem, 5.5vw, 5rem)', 
+              fontSize: 'clamp(2rem, 5vw, 4.5rem)', 
               fontWeight: 800, 
               lineHeight: 1.05, 
-              letterSpacing: '-0.04em',
-              marginBottom: '1.5rem',
+              letterSpacing: '-0.03em',
+              marginBottom: '1rem',
               color: 'var(--text-primary)',
-              maxWidth: '18ch'
+              wordWrap: 'break-word',
+              hyphens: 'auto',
+              maxWidth: '16ch'
             }}>
-              Good ideas deserve better digital experiences.
+              I TURN YOUR IDEAS INTO DIGITAL PRODUCTS THAT WORK.
             </h1>
-            
-            <p className="body-text hero-reveal" style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '1.5rem', maxWidth: '42ch', lineHeight: 1.6 }}>
-              Hi, I'm Pritish Ganguly, an independent digital partner based in Kolkata, India. I help startups, businesses and ambitious individuals turn ideas into polished digital experiences, intelligent software and reliable technical solutions.
-            </p>
 
-            <p className="body-text hero-reveal" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: 'var(--text-secondary)', marginBottom: '2.5rem', maxWidth: '48ch', lineHeight: 1.6 }}>
-              By combining thoughtful design with computer science and engineering, I build solutions that look exceptional, solve real problems and are designed to grow with your goals.
+            <div className="hero-reveal" style={{ 
+              fontSize: 'clamp(0.875rem, 1.5vw, 1.25rem)', 
+              fontWeight: 700, 
+              letterSpacing: '0.05em',
+              color: 'var(--text-secondary)',
+              marginBottom: '2rem',
+              lineHeight: 1.4
+            }}>
+              WEB &middot; AI/ML &middot; AUTOMATION &middot; DIGITAL SYSTEMS
+            </div>
+            
+            <p className="body-text hero-reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', fontWeight: 400, color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '46ch', lineHeight: 1.7 }}>
+              From frontend experiences to backend systems, AI-powered solutions and automation, I build reliable digital products designed around your goals, your users and your business.
             </p>
             
             <div className="hero-reveal" style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
-              <a href="#contact" className="btn-primary" style={{ padding: '1rem 2rem', borderRadius: '99px' }}>
-                START A PROJECT <ArrowRight size={18} />
-              </a>
+              <button onClick={(e) => { e.preventDefault(); openModal(e); }} className="btn-primary" style={{ padding: '1rem 2rem', borderRadius: '99px' }}>
+                LET'S BUILD SOMETHING <ArrowRight size={18} />
+              </button>
               <a href="#work" className="nav-link-hover" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>
-                EXPLORE MY WORK <ArrowDown size={16} />
+                SEE WHAT I'VE BUILT <ArrowDown size={16} />
               </a>
             </div>
           </div>

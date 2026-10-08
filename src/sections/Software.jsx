@@ -58,7 +58,7 @@ export const Software = () => {
       <div className="container">
         <div className="software-grid">
           
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: 0 }}>
             <span className="eyebrow">06 / SOFTWARE</span>
             <h2 className="heading-1" style={{ marginBottom: '2rem', wordBreak: 'break-word', hyphens: 'auto' }}>
               SOFTWARE WITH A JOB TO DO.
@@ -77,14 +77,15 @@ export const Software = () => {
           <div style={{ 
             backgroundColor: 'var(--surface-elevated)', 
             borderRadius: '24px', 
-            padding: '4rem 2rem', 
+            padding: '3rem 1rem', 
             display: 'flex', 
             flexDirection: 'column', 
             alignItems: 'center',
-            border: '1px solid var(--border-color)'
+            border: '1px solid var(--border-color)',
+            overflow: 'hidden'
           }}>
             
-            <div className="arch-node" style={nodeStyle}>
+            <div className="arch-node" style={{...nodeStyle, maxWidth: '100%'}}>
               <User size={24} color="var(--accent)" />
               <span className="metadata">USER</span>
             </div>
@@ -94,7 +95,7 @@ export const Software = () => {
               <div className="arch-dot" style={dotStyle}></div>
             </div>
             
-            <div className="arch-node" style={nodeStyle}>
+            <div className="arch-node" style={{...nodeStyle, maxWidth: '100%'}}>
               <Monitor size={24} color="var(--accent)" />
               <span className="metadata">FRONTEND</span>
             </div>
@@ -104,26 +105,26 @@ export const Software = () => {
               <div className="arch-dot" style={dotStyle}></div>
             </div>
             
-            <div className="arch-node" style={nodeStyle}>
+            <div className="arch-node" style={{...nodeStyle, maxWidth: '100%'}}>
               <Network size={24} color="var(--accent)" />
               <span className="metadata">API / GATEWAY</span>
             </div>
             
-            <div style={{ display: 'flex', width: '100%', maxWidth: '300px', position: 'relative', marginTop: '2rem' }}>
+            <div style={{ display: 'flex', width: '100%', maxWidth: '280px', position: 'relative', marginTop: '2rem', gap: '0.5rem' }}>
               
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: '40px', width: '2px', backgroundColor: 'var(--border-color)', marginBottom: '1rem' }}></div>
-                <div className="arch-node" style={{...nodeStyle, width: '120px'}}>
+                <div className="arch-node" style={{...nodeStyle, width: '100%', padding: '1rem 0.5rem'}}>
                   <Database size={24} color="var(--accent)" />
-                  <span className="metadata">DATABASE</span>
+                  <span className="metadata" style={{ fontSize: '0.65rem' }}>DATABASE</span>
                 </div>
               </div>
               
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ height: '40px', width: '2px', backgroundColor: 'var(--border-color)', marginBottom: '1rem' }}></div>
-                <div className="arch-node" style={{...nodeStyle, width: '120px'}}>
+                <div className="arch-node" style={{...nodeStyle, width: '100%', padding: '1rem 0.5rem'}}>
                   <Layers size={24} color="var(--accent)" />
-                  <span className="metadata">SERVICES</span>
+                  <span className="metadata" style={{ fontSize: '0.65rem' }}>SERVICES</span>
                 </div>
               </div>
               

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ThemeProvider } from './context/ThemeContext';
+import { ModalProvider } from './components/ModalContext';
 import { Preloader } from './components/Preloader';
 import { Cursor } from './components/Cursor';
 import { Navbar } from './components/Navbar';
@@ -65,10 +66,11 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Cursor />
-      <Preloader onComplete={() => setSiteLoaded(true)} />
-      <Navbar show={siteLoaded} />
-      <main>
+      <ModalProvider>
+        <Cursor />
+        <Preloader onComplete={() => setSiteLoaded(true)} />
+        <Navbar show={siteLoaded} />
+        <main>
         <Hero isLoaded={siteLoaded} />
         <CinematicVideo />
         <Industries />
@@ -92,6 +94,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      </ModalProvider>
     </ThemeProvider>
   );
 }
